@@ -6,7 +6,7 @@
 /*   By: lusampai <lusampai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/26 17:24:59 by lusampai          #+#    #+#             */
-/*   Updated: 2026/10/27 16:34:24 by lusampai         ###   ########.fr       */
+/*   Updated: 2026/10/27 20:25:42 by lusampai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include <pthread.h>
 # include <stdio.h>
 # include <stdlib.h>
+# include <string.h>
 # include <sys/time.h>
 # include <unistd.h>
 

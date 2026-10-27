@@ -6,7 +6,7 @@
 /*   By: lusampai <lusampai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/26 18:19:46 by lusampai          #+#    #+#             */
-/*   Updated: 2026/10/27 17:07:54 by lusampai         ###   ########.fr       */
+/*   Updated: 2026/10/27 20:32:01 by lusampai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,7 @@ static int	parse_int(char *str, int *out)
 		digit = str[i] - '0';
 		if (result > (INT_MAX - digit) / 10)
 			return (1);
-		else
-			result = result * 10 + digit;
+		result = result * 10 + digit;
 		i++;
 	}
 	*out = result;
@@ -46,7 +45,24 @@ static int	parse_scheduler(char *scheduler)
 
 static void	fill_config(int *values, char *scheduler, t_config *config)
 {
-	
+	config->coders = values[0];
+	config->time_burnout = values[1];
+	config->time_compile = values[2];
+	config->time_debug = values[3];
+	config->time_refactor = values[4];
+	config->compiles_required = values[5];
+	config->dongle_cooldown = values[6];
+	if (strcmp(scheduler, "fifo") == 0)
+		config->scheduler = FIFO;
+	else
+		config->scheduler = EDF;
+}
+
+static int	get_min(int index)
+{
+	if (index == 6)
+		return (0);
+	return (1);
 }
 
 int	parser(int argc, char **argv, t_config *config)
@@ -60,6 +76,8 @@ int	parser(int argc, char **argv, t_config *config)
 	while (i < 8)
 	{
 		if (parse_int(argv[i], &values[i - 1]) == 1)
+			return (1);
+		if (values[i - 1] < get_min(i - 1))
 			return (1);
 		i++;
 	}
