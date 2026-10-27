@@ -6,13 +6,14 @@
 /*   By: lusampai <lusampai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/26 17:24:59 by lusampai          #+#    #+#             */
-/*   Updated: 2026/10/26 18:25:29 by lusampai         ###   ########.fr       */
+/*   Updated: 2026/10/27 16:34:24 by lusampai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CODEXION_H
 # define CODEXION_H
 
+# include <limits.h>
 # include <pthread.h>
 # include <stdio.h>
 # include <stdlib.h>
@@ -37,6 +38,6 @@ typedef struct s_config
 	t_scheduler	scheduler;
 }	t_config;
 
-void	parser(int argc, char **argv, t_config *config);
+int	parser(int argc, char **argv, t_config *config);
 
 #endif
