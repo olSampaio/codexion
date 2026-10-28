@@ -6,7 +6,7 @@
 /*   By: lusampai <lusampai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/26 17:24:59 by lusampai          #+#    #+#             */
-/*   Updated: 2026/10/27 20:25:42 by lusampai         ###   ########.fr       */
+/*   Updated: 2026/10/28 20:26:57 by lusampai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include <stdlib.h>
 # include <string.h>
 # include <sys/time.h>
+# include <time.h>
 # include <unistd.h>
 
 typedef enum e_scheduler
@@ -39,6 +40,17 @@ typedef struct s_config
 	t_scheduler	scheduler;
 }	t_config;
 
-int	parser(int argc, char **argv, t_config *config);
+typedef struct s_sim
+{
+	t_config		config;
+	long			start_time;
+	int				stop;
+	pthread_mutex_t	log_mutex;
+}	t_sim;
+
+int		parser(int argc, char **argv, t_config *config);
+long	get_time(void);
+void	precise_sleep(long ms);
+void	log_state(t_sim *sim, int id, char *msg);
 
 #endif

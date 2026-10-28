@@ -9,7 +9,9 @@ SRC_DIR     = src
 OBJ_DIR     = obj
 
 SRCS        = main.c \
-			  parser.c
+			  parser.c \
+			  timer.c \
+			  log.c
 
 OBJS        = $(addprefix $(OBJ_DIR)/, $(SRCS:.c=.o))
 HEADERS     = $(INC_DIR)/codexion.h
