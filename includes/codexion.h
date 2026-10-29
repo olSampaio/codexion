@@ -6,7 +6,7 @@
 /*   By: lusampai <lusampai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/26 17:24:59 by lusampai          #+#    #+#             */
-/*   Updated: 2026/10/29 10:28:59 by lusampai         ###   ########.fr       */
+/*   Updated: 2026/10/29 20:26:23 by lusampai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,5 +73,11 @@ int		parser(int argc, char **argv, t_config *config);
 long	get_time(void);
 void	precise_sleep(long ms);
 void	log_state(t_sim *sim, int id, char *msg);
+int		init_sim(t_sim *sim, t_config *config);
+void	cleanup_sim(t_sim *sim);
+int		init_sim(t_sim *sim, t_config *config);
+void	cleanup_sim(t_sim *sim);
+void	destroy_dongles(t_sim *sim, int n);
+void	destroy_coders(t_sim *sim, int n);
 
 #endif

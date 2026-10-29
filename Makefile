@@ -11,7 +11,8 @@ OBJ_DIR     = obj
 SRCS        = main.c \
 			  parser.c \
 			  timer.c \
-			  log.c
+			  log.c \
+			  init.c
 
 OBJS        = $(addprefix $(OBJ_DIR)/, $(SRCS:.c=.o))
 HEADERS     = $(INC_DIR)/codexion.h

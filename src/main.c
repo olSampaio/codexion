@@ -6,7 +6,7 @@
 /*   By: lusampai <lusampai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/26 18:19:53 by lusampai          #+#    #+#             */
-/*   Updated: 2026/10/29 09:54:32 by lusampai         ###   ########.fr       */
+/*   Updated: 2026/10/29 20:26:53 by lusampai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,27 +33,17 @@ static void	*routine(void *ptr)
 	return (NULL);
 }
 
-int	main(void)
+int	main(int argc, char **argv)
 {
-	t_sim		sim;
-	t_arg		args[4];
-	pthread_t	th[4];
-	int			i;
+	t_config	config;
+    t_sim		sim;
 
-	sim.start_time = get_time();
-	sim.stop = 0;
-	pthread_mutex_init(&sim.log_mutex, NULL);
-	i = 0;
-	while (i < 4)
-	{
-		args[i].sim = &sim;
-		args[i].id = i + 1;
-		pthread_create(&th[i], NULL, routine, &args[i]);
-		i++;
-	}
-	i = 0;
-	while (i < 4)
-		pthread_join(th[i++], NULL);
-	pthread_mutex_destroy(&sim.log_mutex);
-	return (0);
+    if (parser(argc, argv, &config) == 1)
+    	return (1);
+    if (init_sim(&sim, &config) == 1)
+    	return (1);
+    printf("coder 1: left=%p right=%p\n",
+    	(void *)sim.coders[0].left, (void *)sim.coders[0].right);
+    cleanup_sim(&sim);
+    return (0);
 }
