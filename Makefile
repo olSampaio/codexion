@@ -12,7 +12,10 @@ SRCS        = main.c \
 			  parser.c \
 			  timer.c \
 			  log.c \
-			  init.c
+			  init.c \
+			  cleanup.c \
+			  coder.c \
+			  simulation.c
 
 OBJS        = $(addprefix $(OBJ_DIR)/, $(SRCS:.c=.o))
 HEADERS     = $(INC_DIR)/codexion.h
