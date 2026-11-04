@@ -6,7 +6,7 @@
 /*   By: lusampai <lusampai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/29 20:26:05 by lusampai          #+#    #+#             */
-/*   Updated: 2026/10/29 20:28:02 by lusampai         ###   ########.fr       */
+/*   Updated: 2026/11/04 15:19:47 by lusampai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ void	destroy_dongles(t_sim *sim, int n)
 	while (i < n)
 	{
 		pthread_mutex_destroy(&sim->dongles[i].mutex);
+		pthread_cond_destroy(&sim->dongles[i].cond);
 		i++;
 	}
 }

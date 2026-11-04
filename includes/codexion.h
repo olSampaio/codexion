@@ -6,7 +6,7 @@
 /*   By: lusampai <lusampai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/26 17:24:59 by lusampai          #+#    #+#             */
-/*   Updated: 2026/11/03 19:52:02 by lusampai         ###   ########.fr       */
+/*   Updated: 2026/11/04 14:57:53 by lusampai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ typedef struct s_dongle
 	pthread_mutex_t	mutex;
 	long			available_at;
 	int				locked;
+	pthread_cond_t	cond;
 }	t_dongle;
 
 typedef struct s_coder
