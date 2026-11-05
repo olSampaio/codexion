@@ -6,7 +6,7 @@
 /*   By: lusampai <lusampai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/26 17:24:59 by lusampai          #+#    #+#             */
-/*   Updated: 2026/11/04 14:57:53 by lusampai         ###   ########.fr       */
+/*   Updated: 2026/11/04 23:00:23 by lusampai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,5 +83,7 @@ void	destroy_coders(t_sim *sim, int n);
 void	*coder_routine(void *arg);
 void	join_threads(t_sim *sim, int n);
 int		start_threads(t_sim *sim);
+int		take_dongles(t_coder *coder);
+void	release_dongles(t_coder *coder);
 
 #endif

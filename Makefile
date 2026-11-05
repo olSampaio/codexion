@@ -15,7 +15,8 @@ SRCS        = main.c \
 			  init.c \
 			  cleanup.c \
 			  coder.c \
-			  simulation.c
+			  simulation.c \
+			  dongle.c
 
 OBJS        = $(addprefix $(OBJ_DIR)/, $(SRCS:.c=.o))
 HEADERS     = $(INC_DIR)/codexion.h
