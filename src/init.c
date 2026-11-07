@@ -6,36 +6,11 @@
 /*   By: lusampai <lusampai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/29 20:20:35 by lusampai          #+#    #+#             */
-/*   Updated: 2026/11/04 15:20:23 by lusampai         ###   ########.fr       */
+/*   Updated: 2026/11/07 15:07:00 by lusampai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "codexion.h"
-
-static int	init_dongles(t_sim *sim)
-{
-	int	i;
-
-	i = 0;
-	while (i < sim->config.coders)
-	{
-		if (pthread_mutex_init(&sim->dongles[i].mutex, NULL) != 0)
-		{
-			destroy_dongles(sim, i);
-			return (1);
-		}
-		if (pthread_cond_init(&sim->dongles[i].cond, NULL) != 0)
-		{
-			pthread_mutex_destroy(&sim->dongles[i].mutex);
-			destroy_dongles(sim, i);
-			return (1);
-		}
-		sim->dongles[i].locked = 0;
-		sim->dongles[i].available_at = 0;
-		i++;
-	}
-	return (0);
-}
 
 static int	init_coders(t_sim *sim)
 {

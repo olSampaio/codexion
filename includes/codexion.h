@@ -6,7 +6,7 @@
 /*   By: lusampai <lusampai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/26 17:24:59 by lusampai          #+#    #+#             */
-/*   Updated: 2026/11/04 23:00:23 by lusampai         ###   ########.fr       */
+/*   Updated: 2026/11/07 15:16:59 by lusampai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,12 +40,27 @@ typedef struct s_config
 	t_scheduler	scheduler;
 }	t_config;
 
+typedef struct s_heap_node
+{
+	long	key;
+	int		id;
+}	t_heap_node;
+
+typedef struct s_heap
+{
+	t_heap_node	*nodes;
+	int			size;
+	int			capacity;
+}	t_heap;
+
 typedef struct s_dongle
 {
 	pthread_mutex_t	mutex;
+	pthread_cond_t	cond;
 	long			available_at;
 	int				locked;
-	pthread_cond_t	cond;
+	long			ticket;
+	t_heap			queue;
 }	t_dongle;
 
 typedef struct s_coder
@@ -85,5 +100,15 @@ void	join_threads(t_sim *sim, int n);
 int		start_threads(t_sim *sim);
 int		take_dongles(t_coder *coder);
 void	release_dongles(t_coder *coder);
+int		heap_init(t_heap *heap, int capacity);
+void	heap_destroy(t_heap *heap);
+int		heap_push(t_heap *heap, t_heap_node node);
+int		heap_pop(t_heap *heap, t_heap_node *out);
+int		heap_peek(t_heap *heap, t_heap_node *out);
+void	sift_up(t_heap *heap, int i);
+void	sift_down(t_heap *heap, int i);
+int		init_dongles(t_sim *sim);
+int		take_dongle(t_coder *coder, t_dongle *dongle);
+int		is_stopped(t_sim *sim);
 
 #endif
