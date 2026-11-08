@@ -21,7 +21,6 @@ SRCS        = main.c \
 			  heap.c \
 			  heap_utils.c \
 			  init_dongle.c \
-			  dongle_take.c
 
 OBJS        = $(addprefix $(OBJ_DIR)/, $(SRCS:.c=.o))
 HEADERS     = $(INC_DIR)/codexion.h

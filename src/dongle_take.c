@@ -6,7 +6,7 @@
 /*   By: lusampai <lusampai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/07 14:00:51 by lusampai          #+#    #+#             */
-/*   Updated: 2026/11/07 15:16:18 by lusampai         ###   ########.fr       */
+/*   Updated: 2026/11/07 23:21:38 by lusampai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,24 @@ static int	ready(t_coder *coder, t_dongle *dongle)
 		&& get_time() >= dongle->available_at);
 }
 
-/* wait_cooldown: copie aqui, sem alterações, a que está no dongle.c */
+static void	wait_cooldown(t_dongle *dongle)
+{
+	long			remaining;
+	struct timespec	ts;
+
+	remaining = dongle->available_at - get_time();
+	if (remaining <= 0)
+		return ;
+	clock_gettime(CLOCK_REALTIME, &ts);
+	ts.tv_sec += remaining / 1000;
+	ts.tv_nsec += (remaining % 1000) * 1000000;
+	if (ts.tv_nsec >= 1000000000)
+	{
+		ts.tv_sec += 1;
+		ts.tv_nsec -= 1000000000;
+	}
+	pthread_cond_timedwait(&dongle->cond, &dongle->mutex, &ts);
+}
 
 int	take_dongle(t_coder *coder, t_dongle *dongle)
 {

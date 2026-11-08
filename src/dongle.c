@@ -6,11 +6,27 @@
 /*   By: lusampai <lusampai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/04 15:28:31 by lusampai          #+#    #+#             */
-/*   Updated: 2026/11/07 15:16:35 by lusampai         ###   ########.fr       */
+/*   Updated: 2026/11/07 23:26:23 by lusampai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "codexion.h"
+
+static void	release_dongle(t_dongle *dongle, long cooldown)
+{
+	pthread_mutex_lock(&dongle->mutex);
+	dongle->locked = 0;
+	dongle->available_at = get_time() + cooldown;
+	pthread_cond_broadcast(&dongle->cond);
+	pthread_mutex_unlock(&dongle->mutex);
+}
+
+void	release_dongles(t_coder *coder)
+{
+	release_dongle(coder->left, coder->sim->config.dongle_cooldown);
+	if (coder->left != coder->right)
+		release_dongle(coder->right, coder->sim->config.dongle_cooldown);
+}
 
 int	take_dongles(t_coder *coder)
 {
