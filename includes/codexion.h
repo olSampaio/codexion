@@ -6,7 +6,7 @@
 /*   By: lusampai <lusampai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/26 17:24:59 by lusampai          #+#    #+#             */
-/*   Updated: 2026/11/07 15:16:59 by lusampai         ###   ########.fr       */
+/*   Updated: 2026/11/10 22:55:05 by lusampai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,23 +81,27 @@ typedef struct s_sim
 	long			start_time;
 	int				stop;
 	pthread_mutex_t	log_mutex;
+	pthread_t		monitor;
 	t_coder			*coders;
 	t_dongle		*dongles;
 }	t_sim;
 
 int		parser(int argc, char **argv, t_config *config);
 long	get_time(void);
-void	precise_sleep(long ms);
+void	precise_sleep(t_sim *sim, long ms);
 void	log_state(t_sim *sim, int id, char *msg);
+int		is_stopped(t_sim *sim);
+void	stop_sim(t_sim *sim, int burned_id);
 int		init_sim(t_sim *sim, t_config *config);
-void	cleanup_sim(t_sim *sim);
-int		init_sim(t_sim *sim, t_config *config);
+int		init_dongles(t_sim *sim);
 void	cleanup_sim(t_sim *sim);
 void	destroy_dongles(t_sim *sim, int n);
 void	destroy_coders(t_sim *sim, int n);
 void	*coder_routine(void *arg);
-void	join_threads(t_sim *sim, int n);
+void	*monitor_routine(void *arg);
 int		start_threads(t_sim *sim);
+void	join_threads(t_sim *sim, int n);
+int		take_dongle(t_coder *coder, t_dongle *dongle);
 int		take_dongles(t_coder *coder);
 void	release_dongles(t_coder *coder);
 int		heap_init(t_heap *heap, int capacity);
@@ -107,8 +111,5 @@ int		heap_pop(t_heap *heap, t_heap_node *out);
 int		heap_peek(t_heap *heap, t_heap_node *out);
 void	sift_up(t_heap *heap, int i);
 void	sift_down(t_heap *heap, int i);
-int		init_dongles(t_sim *sim);
-int		take_dongle(t_coder *coder, t_dongle *dongle);
-int		is_stopped(t_sim *sim);
 
 #endif

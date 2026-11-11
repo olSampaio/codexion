@@ -6,7 +6,7 @@
 /*   By: lusampai <lusampai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/26 18:19:53 by lusampai          #+#    #+#             */
-/*   Updated: 2026/11/03 19:54:33 by lusampai         ###   ########.fr       */
+/*   Updated: 2026/11/10 22:45:45 by lusampai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ int	main(int argc, char **argv)
 		cleanup_sim(&sim);
 		return (1);
 	}
+	pthread_join(sim.monitor, NULL);
 	join_threads(&sim, sim.config.coders);
 	cleanup_sim(&sim);
 	return (0);

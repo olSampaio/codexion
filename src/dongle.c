@@ -6,7 +6,7 @@
 /*   By: lusampai <lusampai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/04 15:28:31 by lusampai          #+#    #+#             */
-/*   Updated: 2026/11/07 23:26:23 by lusampai         ###   ########.fr       */
+/*   Updated: 2026/11/10 22:41:09 by lusampai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,13 +19,6 @@ static void	release_dongle(t_dongle *dongle, long cooldown)
 	dongle->available_at = get_time() + cooldown;
 	pthread_cond_broadcast(&dongle->cond);
 	pthread_mutex_unlock(&dongle->mutex);
-}
-
-void	release_dongles(t_coder *coder)
-{
-	release_dongle(coder->left, coder->sim->config.dongle_cooldown);
-	if (coder->left != coder->right)
-		release_dongle(coder->right, coder->sim->config.dongle_cooldown);
 }
 
 int	take_dongles(t_coder *coder)
@@ -45,12 +38,17 @@ int	take_dongles(t_coder *coder)
 	}
 	if (take_dongle(coder, first) != 0)
 		return (1);
-	if (first == second)
-		return (1);
-	if (take_dongle(coder, second) != 0)
+	if (first == second || take_dongle(coder, second) != 0)
 	{
 		release_dongle(first, coder->sim->config.dongle_cooldown);
 		return (1);
 	}
 	return (0);
+}
+
+void	release_dongles(t_coder *coder)
+{
+	release_dongle(coder->left, coder->sim->config.dongle_cooldown);
+	if (coder->left != coder->right)
+		release_dongle(coder->right, coder->sim->config.dongle_cooldown);
 }
